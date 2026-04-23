@@ -1,0 +1,48 @@
+classDiagram
+    direction LR
+
+    class ConfiguracionOriginator {
+        <<Originator>>
+        -ventanasBloqueadas boolean
+        -puertasBloqueadas boolean
+        -cinturonObligatorio boolean
+        -velocidadMaxima number
+        +getEstado() ConfigState
+        +setEstado(estado) void
+        +crearMemento(nombre) ConfiguracionMemento
+        +restaurarMemento(m) void
+        +activarModoInfantil() void
+        +desactivarModoInfantil() void
+    }
+
+    class ConfiguracionMemento {
+        <<Memento>>
+        -id string
+        -nombre string
+        -fecha Date
+        -ventanasBloqueadas boolean
+        -puertasBloqueadas boolean
+        -cinturonObligatorio boolean
+        -velocidadMaxima number
+        +getId() string
+        +getNombre() string
+        +getFecha() Date
+        +getVentanasBloqueadas() boolean
+        +getPuertasBloqueadas() boolean
+        +getCinturonObligatorio() boolean
+        +getVelocidadMaxima() number
+        +toJSON() object
+    }
+
+    class ConfiguracionCaretaker {
+        <<Caretaker>>
+        -historial ConfiguracionMemento[]
+        +guardarEstado(m) void
+        +obtenerHistorial() Memento[]
+        +obtenerPorId(id) Memento
+        +eliminarPorId(id) boolean
+        +contarEstados() number
+    }
+
+    ConfiguracionOriginator ..> ConfiguracionMemento : crea / restaura
+    ConfiguracionCaretaker o-- ConfiguracionMemento : almacena

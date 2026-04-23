@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.txt
+.env
+.env.local
+.claude/
+barra.png
